@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APITakeawayTest.Data.Migrations
 {
     [DbContext(typeof(LaptopDbContext))]
-    [Migration("20210522131523_init")]
+    [Migration("20210522140631_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace APITakeawayTest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ConfigurationName")
+                    b.Property<int>("ConfigurationType")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("ConfiguredLaptopId")
@@ -47,7 +47,7 @@ namespace APITakeawayTest.Data.Migrations
 
                     b.HasIndex("ConfiguredLaptopId");
 
-                    b.ToTable("ConfigurationItems");
+                    b.ToTable("ConfigurationItem");
 
                     b.HasDiscriminator<string>("itemType").HasValue("ConfigurationItem");
                 });
@@ -58,7 +58,7 @@ namespace APITakeawayTest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("LaptopId")
+                    b.Property<Guid>("LaptopId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -109,27 +109,29 @@ namespace APITakeawayTest.Data.Migrations
                 {
                     b.HasBaseType("APITakeawayTest.Data.Domain.ConfigurationItem");
 
+                    b.ToTable("ConfigurationItem");
+
                     b.HasDiscriminator().HasValue("Colour");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("9ba0aea2-ec32-4cc9-90a3-a2f70895fdaf"),
-                            ConfigurationName = 3,
+                            ConfigurationType = 3,
                             Name = "Red",
                             Price = 50.76m
                         },
                         new
                         {
                             Id = new Guid("b642485c-a867-40ac-b8eb-adcabe5b7302"),
-                            ConfigurationName = 3,
+                            ConfigurationType = 3,
                             Name = "Blue",
                             Price = 50.76m
                         },
                         new
                         {
                             Id = new Guid("a99ea5e9-2b28-4251-9d0b-fcdc56d4d9cd"),
-                            ConfigurationName = 3,
+                            ConfigurationType = 3,
                             Name = "Green",
                             Price = 50.76m
                         });
@@ -139,27 +141,29 @@ namespace APITakeawayTest.Data.Migrations
                 {
                     b.HasBaseType("APITakeawayTest.Data.Domain.ConfigurationItem");
 
+                    b.ToTable("ConfigurationItem");
+
                     b.HasDiscriminator().HasValue("Ram");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("29bd7c1b-5588-42dc-aef0-6df2c14ac5c0"),
-                            ConfigurationName = 1,
+                            ConfigurationType = 1,
                             Name = "8GB",
                             Price = 45.67m
                         },
                         new
                         {
                             Id = new Guid("a05ade3b-14af-4be3-ad7f-95ef4d268cdb"),
-                            ConfigurationName = 1,
+                            ConfigurationType = 1,
                             Name = "16GB",
                             Price = 87.88m
                         },
                         new
                         {
                             Id = new Guid("773774fc-fda5-4946-90fe-b022ff40bd82"),
-                            ConfigurationName = 1,
+                            ConfigurationType = 1,
                             Name = "32GB",
                             Price = 154.96m
                         });
@@ -169,34 +173,36 @@ namespace APITakeawayTest.Data.Migrations
                 {
                     b.HasBaseType("APITakeawayTest.Data.Domain.ConfigurationItem");
 
+                    b.ToTable("ConfigurationItem");
+
                     b.HasDiscriminator().HasValue("Storage");
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("cb03105a-f72f-4fdf-978a-4975fc7884a9"),
-                            ConfigurationName = 2,
+                            ConfigurationType = 2,
                             Name = "HDD 500GB",
                             Price = 123.34m
                         },
                         new
                         {
                             Id = new Guid("8326ea7b-134d-44ab-aaa6-28ce7c669755"),
-                            ConfigurationName = 2,
+                            ConfigurationType = 2,
                             Name = "SSD 256GB",
                             Price = 89.00m
                         },
                         new
                         {
                             Id = new Guid("1d2dfd2b-5892-4600-a24d-164dc6023dd4"),
-                            ConfigurationName = 2,
+                            ConfigurationType = 2,
                             Name = "HDD 1TB",
                             Price = 200.00m
                         },
                         new
                         {
                             Id = new Guid("2178426a-891b-4ec7-8ac7-df851a0cb638"),
-                            ConfigurationName = 2,
+                            ConfigurationType = 2,
                             Name = "NVMe 1TB",
                             Price = 120.00m
                         });
@@ -213,7 +219,9 @@ namespace APITakeawayTest.Data.Migrations
                 {
                     b.HasOne("APITakeawayTest.Data.Domain.Laptop", "Laptop")
                         .WithMany()
-                        .HasForeignKey("LaptopId");
+                        .HasForeignKey("LaptopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Laptop");
                 });

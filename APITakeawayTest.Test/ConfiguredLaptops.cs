@@ -26,21 +26,21 @@ namespace APITakeawayTest.Test
             var ram = new Ram
             {
                 Id = new Guid("6912564b-5052-47b2-8e2d-f90e5e556556"),
-                ConfigurationName = ConfigurationItemName.Ram,
+                ConfigurationType = ConfigurationItemName.Ram,
                 Name = "1GB",
                 Price = 65.00M
             };
             var colour = new Colour
             {
                 Id = new Guid("34ee3871-7b6f-464a-ba3e-3dd3197ca69e"),
-                ConfigurationName = ConfigurationItemName.Colour,
+                ConfigurationType = ConfigurationItemName.Colour,
                 Name = "Red",
                 Price = 30.00M
             };
             //TODO: Create List of Storage devices.
             var storage = new Storage
             {
-                ConfigurationName = ConfigurationItemName.Storage,
+                ConfigurationType = ConfigurationItemName.Storage,
                 Id = new Guid("ea634923-7e35-449d-8c8b-1d7b17865a9b"),
                 Name = "256GB SSD",
                 Price = 120.00M
@@ -63,20 +63,20 @@ namespace APITakeawayTest.Test
             ram = new Ram
             {
                 Id = new Guid("6912564b-5052-47b2-8e2d-f90e5e556556"),
-                ConfigurationName = ConfigurationItemName.Ram,
+                ConfigurationType = ConfigurationItemName.Ram,
                 Name = "1GB",
                 Price = 65.00M
             };
             colour = new Colour
             {
                 Id = new Guid("34ee3871-7b6f-464a-ba3e-3dd3197ca69e"),
-                ConfigurationName = ConfigurationItemName.Colour,
+                ConfigurationType = ConfigurationItemName.Colour,
                 Name = "Red",
                 Price = 30.00M
             };
             storage = new Storage
             {
-                ConfigurationName = ConfigurationItemName.Storage,
+                ConfigurationType = ConfigurationItemName.Storage,
                 Id = new Guid("ea634923-7e35-449d-8c8b-1d7b17865a9b"),
                 Name = "256GB SSD",
                 Price = 120.00M
@@ -99,20 +99,20 @@ namespace APITakeawayTest.Test
             ram = new Ram
             {
                 Id = new Guid("6912564b-5052-47b2-8e2d-f90e5e556556"),
-                ConfigurationName = ConfigurationItemName.Ram,
+                ConfigurationType = ConfigurationItemName.Ram,
                 Name = "1GB",
                 Price = 65.00M
             };
             colour = new Colour
             {
                 Id = new Guid("34ee3871-7b6f-464a-ba3e-3dd3197ca69e"),
-                ConfigurationName = ConfigurationItemName.Colour,
+                ConfigurationType = ConfigurationItemName.Colour,
                 Name = "Red",
                 Price = 30.00M
             };
             storage = new Storage
             {
-                ConfigurationName = ConfigurationItemName.Storage,
+                ConfigurationType = ConfigurationItemName.Storage,
                 Id = new Guid("ea634923-7e35-449d-8c8b-1d7b17865a9b"),
                 Name = "256GB SSD",
                 Price = 120.00M

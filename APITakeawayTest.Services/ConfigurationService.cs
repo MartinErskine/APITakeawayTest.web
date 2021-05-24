@@ -29,7 +29,7 @@ namespace APITakeawayTest.Services
         {
             try
             {
-                var laptops = await _context.Laptops.ToListAsync();
+                var laptops = await _context.Laptops.OrderBy(o => o.Name).ToListAsync();
 
                 if (!laptops.Any())
                 {
@@ -87,30 +87,30 @@ namespace APITakeawayTest.Services
             }
         }
 
-        public async Task<ServiceResponse<List<ConfiguredLaptopModel>>> GetConfigurations()
+        public async Task<ServiceResponse<List<ConfigurationItemModel>>> GetConfigurations()
         {
             try
             {
-                var configurations = await _context.ConfiguredLaptops.ToListAsync();
+                var configurations = await _context.ConfigurationItems.ToListAsync();
 
                 if (!configurations.Any())
                 {
-                    return new ServiceResponse<List<ConfiguredLaptopModel>>
+                    return new ServiceResponse<List<ConfigurationItemModel>>
                     {
                         ErrorCode = HttpStatusCode.NotFound,
                         ErrorDescription = "No configurations found"
                     };
                 }
 
-                return new ServiceResponse<List<ConfiguredLaptopModel>>
+                return new ServiceResponse<List<ConfigurationItemModel>>
                 {
-                    Data = _mapper.Map<List<ConfiguredLaptopModel>>(configurations)
+                    Data = _mapper.Map<List<ConfigurationItemModel>>(configurations)
                 };
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                return new ServiceResponse<List<ConfiguredLaptopModel>>
+                return new ServiceResponse<List<ConfigurationItemModel>>
                 {
                     ErrorCode = HttpStatusCode.InternalServerError,
                     ErrorDescription = "Internal Server Error"
@@ -155,11 +155,14 @@ namespace APITakeawayTest.Services
         {
             try
             {
+                var basketItems = await _context.ConfiguredLaptops.ToListAsync();
+
+
                 var checkItem = await _context.ConfiguredLaptops
                     .Include(i => i.ConfigurationItems)
-                    .Include(i => i.Laptop)
+                    //.Include(i => i.Laptop)
                     .FirstOrDefaultAsync(f =>
-                    f.Laptop.Id == configuredLaptopModel.Laptop.Id);
+                    f.LaptopId == configuredLaptopModel.Laptop.Id);
 
 
                 //f.ConfigurationItems.Equals(configuredLaptopModel.ConfigurationItems));
@@ -168,7 +171,7 @@ namespace APITakeawayTest.Services
 
                 if (checkItem != null)
                 {
-                    if (checkItem.Laptop.Equals(entity.Laptop) && checkItem.ConfigurationItems.Equals(entity.ConfigurationItems))
+                    if (checkItem.LaptopId.Equals(entity.LaptopId) && checkItem.ConfigurationItems.Equals(entity.ConfigurationItems))
                     {
 
                     }

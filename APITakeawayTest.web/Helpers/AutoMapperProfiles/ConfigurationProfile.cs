@@ -10,6 +10,8 @@ namespace APITakeawayTest.web.Helpers.AutoMapperProfiles
         {
             CreateMap<Laptop, LaptopModel>().ReverseMap();
 
+            CreateMap<ConfigurationItem, ConfigurationItemModel>().ReverseMap();
+
             CreateMap<ConfiguredLaptop, ConfiguredLaptopModel>()
                 .ForPath(dest => dest.ConfigurationItems, opt => opt.MapFrom(src => src.ConfigurationItems))
                 .ReverseMap();

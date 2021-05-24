@@ -25,7 +25,7 @@ namespace APITakeawayTest.web.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<object>> Get()
         {
-            var response = await _configurationService.GetLaptops();
+            var response = await _configurationService.GetConfigurations();
 
             if (response.IsError)
             {

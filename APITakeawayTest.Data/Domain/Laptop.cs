@@ -1,14 +1,20 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APITakeawayTest.Data.Domain
 {
+    [Table("Laptops")]
     public class Laptop
     {
+        [Key]
         public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         public decimal Price { get; set; }
 
+        //[ForeignKey("ConfigurationItemFk")]
         //public Guid ConfigurationItemId { get; set; }
         //public ConfigurationItem ConfigurationItem { get; set; }
 

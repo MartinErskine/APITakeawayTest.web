@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace APITakeawayTest.Data.Domain
 {
+    [Table("ConfiguredLaptops")]
     public class ConfiguredLaptop
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        [ForeignKey("LaptopFk")]
+        public Guid LaptopId { get; set; }
+
         public Laptop Laptop { get; set; }
 
-        public List<ConfigurationItem> ConfigurationItems { get; set; }
+        public HashSet<ConfigurationItem> ConfigurationItems { get; set; }
 
         public bool Equals(ConfiguredLaptop otherConfiguredLaptop)
         {
@@ -31,14 +36,14 @@ namespace APITakeawayTest.Data.Domain
 
                 if (item.Equals(ConfigurationItem))
                 {
-                    if (Laptop.Equals(otherConfiguredLaptop.Laptop))
+                    if (LaptopId.Equals(otherConfiguredLaptop.LaptopId))
                     {
                         return true;
                     }
                 }
             }
 
-            return Laptop.Equals(otherConfiguredLaptop.Laptop)
+            return LaptopId.Equals(otherConfiguredLaptop.LaptopId)
                    && ConfigurationItems.Equals(otherConfiguredLaptop.ConfigurationItems);
         }
     }

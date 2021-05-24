@@ -25,7 +25,7 @@ namespace APITakeawayTest.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LaptopId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    LaptopId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,15 +35,15 @@ namespace APITakeawayTest.Data.Migrations
                         column: x => x.LaptopId,
                         principalTable: "Laptops",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConfigurationItems",
+                name: "ConfigurationItem",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ConfigurationName = table.Column<int>(type: "int", nullable: false),
+                    ConfigurationType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ConfiguredLaptopId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -51,9 +51,9 @@ namespace APITakeawayTest.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConfigurationItems", x => x.Id);
+                    table.PrimaryKey("PK_ConfigurationItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ConfigurationItems_ConfiguredLaptops_ConfiguredLaptopId",
+                        name: "FK_ConfigurationItem_ConfiguredLaptops_ConfiguredLaptopId",
                         column: x => x.ConfiguredLaptopId,
                         principalTable: "ConfiguredLaptops",
                         principalColumn: "Id",
@@ -61,8 +61,8 @@ namespace APITakeawayTest.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ConfigurationItems",
-                columns: new[] { "Id", "ConfigurationName", "ConfiguredLaptopId", "Name", "Price", "itemType" },
+                table: "ConfigurationItem",
+                columns: new[] { "Id", "ConfigurationType", "ConfiguredLaptopId", "Name", "Price", "itemType" },
                 values: new object[,]
                 {
                     { new Guid("9ba0aea2-ec32-4cc9-90a3-a2f70895fdaf"), 3, null, "Red", 50.76m, "Colour" },
@@ -88,8 +88,8 @@ namespace APITakeawayTest.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConfigurationItems_ConfiguredLaptopId",
-                table: "ConfigurationItems",
+                name: "IX_ConfigurationItem_ConfiguredLaptopId",
+                table: "ConfigurationItem",
                 column: "ConfiguredLaptopId");
 
             migrationBuilder.CreateIndex(
@@ -101,7 +101,7 @@ namespace APITakeawayTest.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ConfigurationItems");
+                name: "ConfigurationItem");
 
             migrationBuilder.DropTable(
                 name: "ConfiguredLaptops");
